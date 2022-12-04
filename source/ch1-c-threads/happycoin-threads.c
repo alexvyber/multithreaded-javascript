@@ -60,16 +60,17 @@ void * get_happycoins(void * arg) {
   return (void *)result;
 }
 
-#define THREAD_COUNT 4
+#define THREAD_COUNT 16
 
 int main() {
   pthread_t thread [THREAD_COUNT];
 
-  int attempts = 10000000/THREAD_COUNT;
+  int attempts = 1000000000/THREAD_COUNT;
   int count = 0;
   for (int i = 0; i < THREAD_COUNT; i++) {
     pthread_create(&thread[i], NULL, get_happycoins, &attempts);
   }
+
   for (int j = 0; j < THREAD_COUNT; j++) {
     struct happy_result * result;
     pthread_join(thread[j], (void **)&result);
